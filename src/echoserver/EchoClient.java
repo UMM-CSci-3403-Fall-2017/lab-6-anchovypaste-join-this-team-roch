@@ -8,17 +8,20 @@ public class EchoClient {
       InputStream input;
       OutputStream output;
 
-      File file = new File(args[0]);
+      //File file = new File("kylesaidtodothis.txt");
 
-      byte[] bytes = new byte[16 * 1024];
       output = socket.getOutputStream();
       input = socket.getInputStream();
 
       int count;
-        while ((count = input.read(bytes)) > 0) {
-        	output.write(bytes, 0, count);
-        }
+      while((count = System.in.read()) != -1){
+        System.out.println(count);
+        output.write(count);
+        System.out.write(input.read());
+        output.flush();
+      }
 
+      System.out.flush();
       input.close();
       output.close();
       socket.close();

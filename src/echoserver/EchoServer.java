@@ -4,10 +4,10 @@ import java.io.*;
 public class EchoServer {
   public static void main(String[] args) {
     try {
-      Socket socket = null;
       InputStream input = null;
       OutputStream output = null;
       ServerSocket sock = new ServerSocket(6013);
+      Socket socket = null;
 
       //Code gotten from stackOverFlow userName = Pankaj
       while (true) {
@@ -27,18 +27,29 @@ public class EchoServer {
         }
 
         try {
-            output = new FileOutputStream("M:\\test2.xml");
+            output = new FileOutputStream("andy.txt");
+            System.out.println("here2");
         } catch (FileNotFoundException ex) {
             System.out.println("File not found. ");
         }
 
-        byte[] bytes = new byte[16*1024];
+        byte[] bytes = new byte[8192];
 
-        int count;
-        while ((count = input.read(bytes)) > 0) {
-            output.write(bytes, 0, count);
+        int count =0;
+        System.out.println("this is the count outside");
+
+          System.out.println(count);
+        while((count = input.read()) != -1) {
+          System.out.println("this is the count");
+
+            System.out.println(count);
+          output.write(count);
+          output.flush();
+            System.out.println("here");
         }
+        System.out.println("this is the count outsidebelow");
 
+          System.out.println(count);
         output.close();
         input.close();
         socket.close();
