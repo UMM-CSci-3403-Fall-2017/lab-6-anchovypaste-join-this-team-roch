@@ -1,3 +1,4 @@
+package echoserver;
 import java.net.*;
 import java.io.*;
 
@@ -5,19 +6,27 @@ public class EchoClient {
   public static void main(String[] args) {
     try {
       Socket socket = new Socket("127.0.0.1", 6013);
-      InputStream input;
-      OutputStream output;
+      InputStream input = null;
+      OutputStream output = null;
+      //trying to get the InputStream
+      try {
+          input = socket.getInputStream();
+      } catch (IOException ex) {
+          System.out.println("Can't get socket input stream. ");
+      }
 
-      //File file = new File("kylesaidtodothis.txt");
-
-      output = socket.getOutputStream();
-      input = socket.getInputStream();
+      try {
+          output = socket.getOutputStream();
+      } catch (IOException ex) {
+          System.out.println("Can't get socket output stream. ");
+      }
 
       int count;
+      //Reading in file until the System.in.read returns -1
       while((count = System.in.read()) != -1){
-        System.out.println(count);
         output.write(count);
         System.out.write(input.read());
+        //Flushes the output stream and forces any buffered output bytes to be written out
         output.flush();
       }
 

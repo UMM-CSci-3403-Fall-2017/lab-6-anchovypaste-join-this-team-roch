@@ -1,62 +1,52 @@
+package echoserver;
 import java.net.*;
 import java.io.*;
 
-public class EchoServer {
-  public static void main(String[] args) {
-    try {
-      InputStream input = null;
-      OutputStream output = null;
-      ServerSocket sock = new ServerSocket(6013);
-      Socket socket = null;
+  public class EchoServer {
+    public static void main(String[] args) {
+      try {
+        InputStream input = null;
+        OutputStream output = null;
+        ServerSocket sock = new ServerSocket(6013);
+        Socket socket = null;
 
-      //Code gotten from stackOverFlow userName = Pankaj
-      while (true) {
-        System.out.println("Got a request!");
-        try {
-            socket = sock.accept();
-        } catch (IOException ex) {
-            System.out.println("Can't accept client connection. ");
+        while (true) {
+          System.out.println("Got a request!");
+          try {
+              socket = sock.accept();
+          } catch (IOException ex)
+          {
+              System.out.println("Can't accept client connection. ");
+          }
+
+          try {
+              input = socket.getInputStream();
+          } catch (IOException ex) {
+              System.out.println("Can't get socket input stream. ");
+          }
+
+          try {
+              output = socket.getOutputStream();
+          } catch (IOException ex) {
+              System.out.println("Can't get socket output stream. ");
+          }
+
+          int count =0;
+          //Reading in file until input.read returns -1
+          while((count = input.read()) != -1) {
+            output.write(count);
+
+            //Flushes the output stream and forces any buffered output bytes to be written out.
+            output.flush();
+          }
+
+          input.close();
+          output.close();
+          socket.close();
         }
 
-        try {
-            input = socket.getInputStream();
-            System.out.println(input);
-            System.out.println("here");
-        } catch (IOException ex) {
-            System.out.println("Can't get socket input stream. ");
-        }
-
-        try {
-            output = new FileOutputStream("andy.txt");
-            System.out.println("here2");
-        } catch (FileNotFoundException ex) {
-            System.out.println("File not found. ");
-        }
-
-        byte[] bytes = new byte[8192];
-
-        int count =0;
-        System.out.println("this is the count outside");
-
-          System.out.println(count);
-        while((count = input.read()) != -1) {
-          System.out.println("this is the count");
-
-            System.out.println(count);
-          output.write(count);
-          output.flush();
-            System.out.println("here");
-        }
-        System.out.println("this is the count outsidebelow");
-
-          System.out.println(count);
-        output.close();
-        input.close();
-        socket.close();
-        sock.close();
+      } catch (IOException ioe) {
+        System.err.println(ioe);
       }
-    } catch (IOException ioe) {
-      System.err.println(ioe);
     }
   }
-}
