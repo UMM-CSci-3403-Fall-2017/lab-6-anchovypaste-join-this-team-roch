@@ -26,10 +26,10 @@ public class EchoClient {
       while((count = System.in.read()) != -1){
         output.write(count);
         System.out.write(input.read());
-        //Flushes the output stream and forces any buffered output bytes to be written out
-        output.flush();
       }
-
+      
+      //Flushes the output stream and forces any buffered output bytes to be written out
+      output.flush();
       System.out.flush();
       input.close();
       output.close();
