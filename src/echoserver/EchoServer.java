@@ -35,11 +35,10 @@ import java.io.*;
           //Reading in file until input.read returns -1
           while((count = input.read()) != -1) {
             output.write(count);
-
-            //Flushes the output stream and forces any buffered output bytes to be written out.
-            output.flush();
           }
-
+          
+          //Flushes the output stream and forces any buffered output bytes to be written out.
+          output.flush();
           input.close();
           output.close();
           socket.close();
